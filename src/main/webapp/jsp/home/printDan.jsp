@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<!-- 스크립틀릿 -->
-<%
+<% 
 	String inputDan = request.getParameter("dan");
 	String inputLimit = request.getParameter("limit");
 	String inputColor = request.getParameter("color");
@@ -19,7 +18,7 @@
 
 	int dan = Integer.parseInt(inputDan);
 	int limit = Integer.parseInt(inputLimit);
-%> 
+	%>
 
 <!DOCTYPE html>
 <html>
