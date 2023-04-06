@@ -18,10 +18,14 @@
 <title>게시물 리스트</title>
 </head>
 <body>
+
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 	<a href="../home/main"><i class="fa-solid fa-house"></i></a>
 
 	<h1>게시물 리스트</h1>
+	
+	
 	
 	<table border="1">
 		<colgroup>
@@ -47,12 +51,15 @@
 		%>
 	</table>
 	
+	<div><a href="write">글작성</a></div>
+	
 	<style type="text/css">
 		.paging > a.red {
 		color : red;
 		font-weight: bold;
 		}
 	</style>
+	
 	
 	<div class="paging">
 		<% for(int i = 1 ; i <= totalPage ; i++) { %>
