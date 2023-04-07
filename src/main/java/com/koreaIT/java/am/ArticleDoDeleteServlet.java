@@ -51,6 +51,5 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-	
 	}
 }

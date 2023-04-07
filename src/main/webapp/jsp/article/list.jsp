@@ -27,11 +27,11 @@
 	
 	
 	
-	<table border="1">
+	<table border="1" bordercolor="green">
 		<colgroup>
 			<col width="50"/>
 			<col width="200"/>
-			<col width="100"/>
+			<col width="300"/>
 		</colgroup>
 		<tr>
 			<th>번호</th>
@@ -51,7 +51,7 @@
 		%>
 	</table>
 	
-	<div><a href="write">글작성</a></div>
+	<div><a href="write">글 쓰기</a></div>
 	
 	<style type="text/css">
 		.paging > a.red {

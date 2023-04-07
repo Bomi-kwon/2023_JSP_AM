@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.koreaIT.java.am.util.DBUtil;
 import com.koreaIT.java.am.util.SecSql;
@@ -14,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/doWrite")
-public class ArticleDoWriteServlet extends HttpServlet {
+@WebServlet("/article/doModify")
+public class ArticleDoModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,18 +31,19 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 			conn = DriverManager.getConnection(url, "root", "");
 			
+			int id = Integer.parseInt(request.getParameter("id"));
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 			
-			SecSql sql = SecSql.from("INSERT INTO article");
-			sql.append("SET regDate = NOW()");
-			sql.append(", updateDate = NOW()");
+			SecSql sql = SecSql.from("UPDATE article");
+			sql.append("SET updateDate = NOW()");
 			sql.append(", title = ?", title);
 			sql.append(", `body` = ?", body);
+			sql.append("WHERE id =?", id);
 			
-			int id = DBUtil.insert(conn, sql);
+			DBUtil.update(conn, sql);
 			
-			response.getWriter().append(String.format("<script>alert('%d번 글이 생성되었습니다.');location.replace('list');</script>",id));
+			response.getWriter().append(String.format("<script>alert('%d번 글이 수정되었습니다.');location.replace('list');</script>",id));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");

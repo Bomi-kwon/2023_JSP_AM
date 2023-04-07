@@ -22,7 +22,11 @@
 	<div>날짜 : <%= Util.datetimeFormat((LocalDateTime) articleMap.get("regDate")) %></div>
 	<div>제목 : <%= (String) articleMap.get("title") %></div>
 	<div>내용 : <%= (String) articleMap.get("body") %></div>
-	<div><a href="delete?id=<%= articleMap.get("id") %>">게시글 삭제</a></div>
-	<div><a href="list">목록</a></div>
+	<div>
+	<a href="modify?id=<%= articleMap.get("id") %>">수정</a>
+	<a href="delete?id=<%= articleMap.get("id") %>">삭제</a>
+	<a href="list">목록</a>
+	</div>
+	<div></div>
 </body>
 </html>
