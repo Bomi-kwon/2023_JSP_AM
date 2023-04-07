@@ -30,7 +30,12 @@ public class ArticleModifyServlet extends HttpServlet {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
-			request.setAttribute("id", id);
+			SecSql sql = SecSql.from("SELECT * FROM article");
+			sql.append("WHERE id =?", id);
+			
+			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
+			
+			request.setAttribute("articleMap", articleMap);
 			
 			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 			

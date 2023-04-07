@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
 
 import com.koreaIT.java.am.util.DBUtil;
 import com.koreaIT.java.am.util.SecSql;
@@ -43,7 +42,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
 			
 			DBUtil.update(conn, sql);
 			
-			response.getWriter().append(String.format("<script>alert('%d번 글이 수정되었습니다.');location.replace('list');</script>",id));
+			response.getWriter().append(String.format("<script>alert('%d번 글이 수정되었습니다.');location.replace('detail?id=%d');</script>",id,id));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
