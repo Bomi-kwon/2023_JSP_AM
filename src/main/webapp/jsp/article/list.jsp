@@ -60,13 +60,32 @@
 		}
 	</style>
 	
-	
 	<div class="paging">
-		<% for(int i = 1 ; i <= totalPage ; i++) { %>
+		<% if(pageNum > 1) { %>
+			<a href="list?page=1">◀</a>			
+		<%}%>
+		
+		<% int pageSize = 15;
+		int from = (int) ((pageNum - 1) / (double) pageSize) * pageSize + 1;
+		int end = from + pageSize - 1;
+		
+		if(pageNum > totalPage) {
+			pageNum = totalPage;
+		}
+		
+		if(end > totalPage) {
+			end = totalPage;
+		} %>
+		
+		<%
+		for(int i = from ; i <= end ; i++) { %>
 			<a class="<%=pageNum == i ? "red" : ""%>" href="list?page=<%=i %>"><%=i %></a>	
-		<% 
-		} 
-		%>
+		<% } %>
+		
+		<% if(pageNum < totalPage) { %>
+			<a href="list?page=<%= totalPage %>">▶</a>			
+		<%}%>
+		
 	</div>
 </body>
 </html>
