@@ -62,15 +62,15 @@
 	
 	<div class="paging">
 		<% if(pageNum > 1) { %>
-			<a href="list?page=1">◀</a>			
+			<a href="list?page=1"><i class="fa-sharp fa-solid fa-angles-left"></i></a>			
 		<%}%>
 		
-		<% int pageSize = 15;
-		int from = (int) ((pageNum - 1) / (double) pageSize) * pageSize + 1;
-		int end = from + pageSize - 1;
+		<% int pageSize = 5;
+		int from = pageNum - pageSize;
+		int end = pageNum + pageSize;
 		
-		if(pageNum > totalPage) {
-			pageNum = totalPage;
+		if(from < 1) {
+			from = 1;
 		}
 		
 		if(end > totalPage) {
@@ -83,7 +83,7 @@
 		<% } %>
 		
 		<% if(pageNum < totalPage) { %>
-			<a href="list?page=<%= totalPage %>">▶</a>			
+			<a href="list?page=<%= totalPage %>"><i class="fa-sharp fa-solid fa-angles-right"></i></a>			
 		<%}%>
 		
 	</div>
