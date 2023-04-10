@@ -9,6 +9,7 @@ CREATE TABLE article(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
+	memberId INT UNSIGNED NOT NULL,
 	title VARCHAR(100) NOT NULL,
 	`body` TEXT NOT NULL
 );
@@ -31,6 +32,7 @@ DESC `member`;
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+memberId = 1,
 title = 'test1',
 `body` = 'test1';
 
@@ -55,5 +57,6 @@ SELECT * FROM `member`
 ORDER BY id DESC;
 
 DELETE FROM `member`
-WHERE `name` = "권보미";
+WHERE loginID = "rnjsqhal51"
+LIMIT 2;
 
