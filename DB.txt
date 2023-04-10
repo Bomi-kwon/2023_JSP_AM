@@ -13,8 +13,19 @@ CREATE TABLE article(
 	`body` TEXT NOT NULL
 );
 
+# member 테이블 생성
+CREATE TABLE `member`(
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginID VARCHAR(50) NOT NULL,
+	loginPW VARCHAR(50) NOT NULL,
+	`name` VARCHAR(50) NOT NULL
+);
+
 # 테이블 구조 확인
 DESC article;
+DESC `member`;
 
 # article 테스트 데이터
 INSERT INTO article
@@ -23,23 +34,13 @@ updateDate = NOW(),
 title = 'test1',
 `body` = 'test1';
 
-INSERT INTO article
+# member 테스트 데이터
+INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-title = 'test2',
-`body` = 'test2';
-
-INSERT INTO article
-SET regDate = NOW(),
-updateDate = NOW(),
-title = 'test3',
-`body` = 'test3';
-
-INSERT INTO article
-SET regDate = NOW(),
-updateDate = NOW(),
-title = 'test4',
-`body` = 'test4';
+loginID = 'test1',
+loginPW = 'test1',
+`name` = 'test1';
 
 # 데이터 갯수 곱하기 2배씩
 INSERT INTO article(regDate, updateDate, title, `body`)
@@ -49,3 +50,10 @@ FROM article;
 # 데이터 확인
 SELECT * FROM article
 ORDER BY id DESC;
+
+SELECT * FROM `member`
+ORDER BY id DESC;
+
+DELETE FROM `member`
+WHERE `name` = "권보미";
+

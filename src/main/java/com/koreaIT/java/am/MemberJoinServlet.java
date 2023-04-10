@@ -13,6 +13,8 @@ public class MemberJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/jsp/member/join.jsp").forward(request, response);
+		
+			request.getRequestDispatcher("/jsp/member/join.jsp").forward(request, response);
+	
 	}
 }
