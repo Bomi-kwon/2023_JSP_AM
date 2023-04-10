@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.koreaIT.java.am.config.Config;
 import com.koreaIT.java.am.util.DBUtil;
@@ -14,9 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/member/doJoin")
-public class MemberDoJoinServlet extends HttpServlet {
+@WebServlet("/member/doLogin")
+public class MemberDoLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,32 +34,28 @@ public class MemberDoJoinServlet extends HttpServlet {
 			
 			String loginID = request.getParameter("loginID");
 			String loginPW = request.getParameter("loginPW");
-			String name = request.getParameter("name");
 			
 			SecSql sql = new SecSql();
 			
-			sql.append("SELECT COUNT(loginID) > 0");
-			sql.append("FROM `member`");
+			sql.append("SELECT * FROM `member`");
 			sql.append("WHERE loginID = ?", loginID);
 			
-			boolean isLoginIdDup = DBUtil.selectRowBooleanValue(conn, sql);
+			Map<String, Object> memberMap = DBUtil.selectRow(conn, sql);
 			
-			if(isLoginIdDup == true) {
-				response.getWriter().append(String.format("<script>alert('%s는 이미 사용중인 아이디입니다.');location.replace('join');</script>",loginID));
+			if(memberMap.isEmpty()) {
+				response.getWriter().append(String.format("<script>alert('%s는 존재하지 않는 아이디입니다.');location.replace('login');</script>",loginID));
 				return;
 			}
 			
+			if(!memberMap.get("loginPW").equals(loginPW)) {
+				response.getWriter().append(String.format("<script>alert('비밀번호가 일치하지 않습니다.');location.replace('login');</script>"));
+			}
 			
-			sql = SecSql.from("INSERT INTO `member`");
-			sql.append("SET regDate = NOW()");
-			sql.append(", updateDate = NOW()");
-			sql.append(", loginID = ?", loginID);
-			sql.append(", loginPW = ?", loginPW);
-			sql.append(", `name` = ?", name);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginedMemberId", memberMap.get("id"));
+			session.setAttribute("loginedMemberLoginId", memberMap.get("loginID"));
 			
-			DBUtil.insert(conn, sql);
-			
-			response.getWriter().append(String.format("<script>alert('%s 회원님 회원가입을 축하합니다.');location.replace('../home/main');</script>",name));
+			response.getWriter().append(String.format("<script>alert('%s님 환영합니다.');location.replace('../home/main');</script>",loginID));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");

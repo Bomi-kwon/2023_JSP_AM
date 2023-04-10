@@ -7,17 +7,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>로그인</title>
 </head>
 <body>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 	<a href="../home/main"><i class="fa-solid fa-house"></i></a>
 
-	<h1>회원가입</h1>
+	<h1>로그인</h1>
 	
 	<script type="text/javascript">
-		function check(form) {
+		function logincheck(form) {
 			
 			if (form.loginID.value.trim().length == 0) {
 				alert('아이디를 입력하세요');
@@ -29,30 +29,13 @@
 				form.loginPW.focus();
 				return;
 			}
-			else if (form.loginPWCheck.value.trim().length == 0) {
-				alert('비밀번호 확인을 입력하세요');
-				form.loginPWCheck.focus();
-				return;
-			}
-			else if(form.name.value.trim().length == 0) {
-				alert('이름을 입력하세요.');
-				form.name.focus();
-				return;
-			}
-			else if(form.loginPW.value != form.loginPWCheck.value) {
-				alert('비밀번호가 일치하지 않습니다.');
-				form.loginPW.value = null;
-				form.loginPWCheck.value = null;
-				form.loginPW.focus();
-				return;
-			}
 			else {
 				form.submit();
 			}
 		}
 	</script>
 	
-	<form id="form" action="doJoin" onsubmit="check(this); return false;">
+	<form action="doLogin" onsubmit="logincheck(this); return false;">
 	
 		<table>
 			<tr>
@@ -63,17 +46,9 @@
 				<th align="right">비밀번호</th>
 				<td><input type="password" name="loginPW" placeholder="비밀번호를 입력해주세요"/></td>
 			</tr>
-			<tr>
-				<th align="right">비밀번호 확인</th>
-				<td><input type="password" name="loginPWCheck" placeholder="비밀번호 확인을 입력해주세요"/></td>
-			</tr>
-			<tr>
-				<th align="right">이름</th>
-				<td><input type="text" name="name" placeholder="이름을 입력해주세요"/></td>
-			</tr>
 		</table>
 		
-		<button>가입</button>
+		<button>로그인</button>
 	</form>
 </body>
 </html>
