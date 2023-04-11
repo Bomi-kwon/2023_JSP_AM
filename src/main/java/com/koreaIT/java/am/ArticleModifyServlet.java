@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/modify")
 public class ArticleModifyServlet extends HttpServlet {
@@ -28,12 +29,32 @@ public class ArticleModifyServlet extends HttpServlet {
 
 			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassWd());
 			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("loginedMemberId") == null) {
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().append(String.format("<script>alert('로그인 후 이용해주세요.');location.replace('../member/login');</script>"));
+				return;
+			}
+			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			SecSql sql = SecSql.from("SELECT * FROM article");
 			sql.append("WHERE id =?", id);
 			
 			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
+			
+			if(articleMap.isEmpty()) {
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().append(String.format("<script>alert('%d번 게시물은 존재하지 않습니다.');location.replace('list');</script>", id));
+				return;
+			}
+			
+			if((int) session.getAttribute("loginedMemberId") != (int) articleMap.get("memberId")) {
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().append(String.format("<script>alert('해당 게시물에 대한 수정 권한이 없습니다.');location.replace('detail?id=%d');</script>", id));
+				return;
+			}
 			
 			request.setAttribute("articleMap", articleMap);
 			

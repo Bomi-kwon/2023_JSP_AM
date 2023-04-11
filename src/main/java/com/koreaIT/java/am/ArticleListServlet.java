@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/list")
 public class ArticleListServlet extends HttpServlet {
@@ -39,7 +40,10 @@ public class ArticleListServlet extends HttpServlet {
 			
 			int startArticleIndex = (page-1)*itemsInAPage;
 			
-			SecSql sql = SecSql.from("SELECT * FROM article");
+			SecSql sql = SecSql.from("SELECT A.*, M.name AS writername");
+			sql.append("FROM article A");
+			sql.append("INNER JOIN `member` M");
+			sql.append("ON A.memberId = M.id");
 			sql.append("ORDER BY id DESC");
 			sql.append("LIMIT ?, ?",startArticleIndex, itemsInAPage);
 			
@@ -49,6 +53,13 @@ public class ArticleListServlet extends HttpServlet {
 			int totalCount = DBUtil.selectRowIntValue(conn, sql);
 			int totalPage = (int) Math.ceil((double) totalCount / itemsInAPage);
 			
+			HttpSession session = request.getSession();
+			int loginedMemberId = -1;
+			if(session.getAttribute("loginedMemberId") != null) {
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+			}
+			
+			request.setAttribute("loginedMemberId", loginedMemberId);
 			request.setAttribute("articleListMap", articleListMap);
 			request.setAttribute("page", page);
 			request.setAttribute("totalPage", totalPage);

@@ -25,18 +25,20 @@
 
 	<h1>게시물 리스트</h1>
 	
-	
+	<%@ include file="../topBar/topBar.jsp" %>
 	
 	<table border="1" bordercolor="green">
 		<colgroup>
 			<col width="50"/>
 			<col width="200"/>
-			<col width="300"/>
+			<col width="200"/>
+			<col width="100"/>
 		</colgroup>
 		<tr>
 			<th>번호</th>
 			<th>날짜</th>
 			<th>제목</th>
+			<th>작성자</th>
 		</tr>
 		<% 
 		for(Map<String, Object> articleMap : articleListMap) {
@@ -45,6 +47,7 @@
 				<th><%= articleMap.get("id") %></th>
 				<th><%= Util.datetimeFormat((LocalDateTime) articleMap.get("regDate")) %></th>
 				<th><a href="detail?id=<%= articleMap.get("id") %>"><%= articleMap.get("title") %></a></th>
+				<th><%= articleMap.get("writername") %></th>
 			</tr>
 		<% 
 		} 
