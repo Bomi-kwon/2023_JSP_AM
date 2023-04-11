@@ -1,4 +1,3 @@
-<%@page import="com.koreaIT.java.am.Service.MemberService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

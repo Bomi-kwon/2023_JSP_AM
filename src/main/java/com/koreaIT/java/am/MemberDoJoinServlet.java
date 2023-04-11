@@ -47,7 +47,6 @@ public class MemberDoJoinServlet extends HttpServlet {
 				return;
 			}
 			
-			
 			sql = SecSql.from("INSERT INTO `member`");
 			sql.append("SET regDate = NOW()");
 			sql.append(", updateDate = NOW()");

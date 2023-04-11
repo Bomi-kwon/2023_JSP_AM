@@ -49,6 +49,7 @@ public class MemberDoLoginServlet extends HttpServlet {
 			
 			if(!memberMap.get("loginPW").equals(loginPW)) {
 				response.getWriter().append(String.format("<script>alert('비밀번호가 일치하지 않습니다.');location.replace('login');</script>"));
+				return;
 			}
 			
 			HttpSession session = request.getSession();
